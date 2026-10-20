@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--b:#1648E8;--bd:#0B2A8F;--ink:#0F1B3D;--mu:#5E6B8A;--ln:#E2E8F4;--bg:#F5F8FE;--w:#fff}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+button{font:inherit;cursor:pointer}a{color:inherit}:focus-visible{outline:3px solid #7DA2FF;outline-offset:2px}
+.ann{background:#0B2A7A;color:#fff;text-align:center;font-size:.8rem;font-weight:700;padding:11px 12px;letter-spacing:.02em}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header{background:#fff;border-bottom:1px solid var(--ln)}header .wrap{display:flex;justify-content:space-between;align-items:center;height:84px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}.brand img{height:46px}
+.bdg0{width:48px;height:48px;border-radius:14px;background:linear-gradient(145deg,#2B6BFF,#1236B8);color:#fff;display:grid;place-items:center;font-weight:800}
+.brand b{font-size:1.5rem;letter-spacing:-.03em;font-weight:800}.brand small{font-size:.65rem;font-weight:700;letter-spacing:.18em;color:var(--mu);margin-left:4px}
+.hb{display:flex;gap:12px}.pill{border:1px solid #CFDCFB;background:#F1F6FF;color:var(--b);border-radius:14px;padding:11px 18px;font-weight:700;display:flex;gap:8px;align-items:center}
+.pill i{background:var(--b);color:#fff;border-radius:50%;width:26px;height:26px;display:grid;place-items:center;font-style:normal;font-size:.85rem}
+.strip{background:#EEF3FD;border-bottom:1px solid var(--ln);font-size:.88rem;color:var(--mu)}.strip .wrap{display:flex;justify-content:space-between;height:42px;align-items:center}
+.strip a{color:var(--b);font-weight:700;text-decoration:none;cursor:pointer}.strip .st{color:#F5A524;margin-right:8px}
+.hero{padding:34px 0 8px}.eb{font-size:.78rem;font-weight:800;letter-spacing:.2em;color:var(--b)}.eb::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:#16B364;margin-right:9px}
+h1{font-size:clamp(2.2rem,5vw,3.5rem);letter-spacing:-.04em;line-height:1.08;font-weight:800;margin-top:8px}h1 span{color:var(--b)}
+.hero .row{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}.sub{color:var(--mu);margin-top:8px;font-size:1.05rem;max-width:56ch}
+.ps{display:flex;gap:10px;flex-wrap:wrap}.ps span{border:1px solid var(--ln);background:#fff;border-radius:999px;padding:9px 16px;font-size:.85rem;font-weight:700;color:var(--bd)}
+#promo{margin-top:22px}#promo:empty{display:none}#promo img{width:100%;border-radius:18px;display:block;cursor:pointer}
+.main{display:grid;grid-template-columns:1fr 430px;gap:28px;padding:28px 0 60px;align-items:start}
+.hd{display:flex;justify-content:space-between;align-items:baseline}.hd h2{font-size:1.3rem;font-weight:800;letter-spacing:-.02em}.hd span{color:var(--mu);font-weight:600;font-size:.9rem}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 22px}.chip{border:1.5px solid var(--ln);background:#fff;border-radius:999px;padding:11px 20px;font-weight:700;color:var(--mu)}.chip[aria-pressed=true]{background:var(--b);color:#fff;border-color:var(--b)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{background:#fff;border:1px solid var(--ln);border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.ph{height:210px;display:grid;place-items:center;position:relative;padding:34px 20px 14px}.ph img{max-width:100%;max-height:100%;object-fit:contain}.ph svg{width:46%}
+.bdg{position:absolute;top:14px;left:14px;background:#fff;color:var(--b);font-size:.78rem;font-weight:700;padding:6px 12px;border-radius:999px;box-shadow:0 2px 8px rgba(11,42,122,.12)}
+.cb{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}.ct{font-size:.68rem;font-weight:800;letter-spacing:.16em;color:var(--mu);text-transform:uppercase}
+.cb h3{font-size:1.2rem;font-weight:700;margin:4px 0 14px;letter-spacing:-.01em}.mdl{color:var(--mu);font-size:.88rem;min-height:1.4em}.pr{font-size:1.9rem;font-weight:800;color:var(--b);letter-spacing:-.03em;margin:14px 0}
+.cb ul{list-style:none;padding:0;font-size:.88rem;color:#3B4868;margin-bottom:16px}.cb li::before{content:"✓";color:var(--b);font-weight:800;margin-right:9px}.cb li+li{margin-top:7px}
+.add{margin-top:auto;width:100%;background:var(--b);color:#fff;border:0;border-radius:12px;padding:13px;font-weight:700}.add:hover{background:var(--bd)}
+#panel{position:sticky;top:16px;background:#fff;border:1px solid var(--ln);border-radius:22px;max-height:calc(100vh - 32px);display:flex;flex-direction:column}
+.ph2{padding:22px 24px 16px;border-bottom:1px solid var(--ln)}.ph2 h2{font-size:1.3rem;font-weight:800}.ph2 p{color:var(--mu);font-size:.88rem;margin-top:4px}
+#pb{padding:18px 24px 24px;overflow:auto}.empty{color:var(--mu);text-align:center;padding:30px 0}
+.it{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:13px 0;border-bottom:1px solid var(--ln);font-size:.92rem}.it small{color:var(--mu)}
+.q{display:flex;align-items:center;gap:8px;margin-top:6px}.q button{width:28px;height:28px;border-radius:8px;border:1.5px solid var(--ln);background:#fff;font-weight:700}
+.lnk{background:none;border:0;color:var(--b);font-weight:700;padding:0;margin:0 0 14px}.q .lnk{margin:0 0 0 6px;font-weight:500;text-decoration:underline;font-size:.82rem;color:var(--mu)}
+.sug h3{font-size:.95rem;margin:18px 0 4px}.sug .add{width:auto;padding:6px 12px;margin-top:6px}
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:1.2rem;margin:16px 0}
+.btn{display:block;width:100%;text-align:center;border:0;border-radius:12px;padding:14px;font-weight:700;background:var(--b);color:#fff;text-decoration:none;margin-top:8px}.btn.alt{background:#EAF0FF;color:var(--b)}
+label{display:block;font-size:.82rem;font-weight:700;margin:12px 0 5px}input,textarea{width:100%;border:1.5px solid var(--ln);border-radius:12px;padding:12px 14px;font:inherit;background:#fff}textarea{height:70px;resize:vertical}.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.err{color:#B3261E;font-size:.85rem;min-height:1.2em;margin-top:8px}
+footer{background:#0B1B4D;color:#A9B8E0;padding:28px 0;font-size:.9rem}footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.mo{position:fixed;inset:0;background:rgba(11,27,77,.55);display:none;place-items:center;z-index:40;padding:16px}.mo.on{display:grid}
+.mb{background:#fff;border-radius:20px;padding:24px;max-width:520px;width:100%;max-height:80vh;overflow:auto}.mb h2{margin-bottom:12px}.rv{padding:12px 0;border-top:1px solid var(--ln)}.rv b{display:block}.rv i{color:#F5A524;font-style:normal}
+.fab{position:fixed;right:18px;bottom:18px;z-index:30;display:flex;flex-direction:column;align-items:flex-end;gap:10px}.fab>button{background:var(--b);color:#fff;border:0;border-radius:999px;padding:14px 22px;font-weight:700;box-shadow:0 12px 30px -8px rgba(11,42,122,.6)}
+.fpop{display:none;background:#fff;border-radius:18px;padding:18px;width:260px;box-shadow:0 24px 50px -12px rgba(11,42,122,.5);border:1px solid var(--ln)}.fpop.on{display:block}.fpop p{font-size:.9rem;color:var(--mu);margin-bottom:10px}.fpop a.s{font-size:.85rem;color:var(--mu)}
+.toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:#0B2A7A;color:#fff;padding:12px 20px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;z-index:50}.toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:980px){.main{grid-template-columns:1fr}#panel{position:static;max-height:none}.ps{display:none}.hb .pill:first-child{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style></head><body>
+<div class="ann" id="ann"></div>
+<header><div class="wrap"><a class="brand" href="#" id="logo"></a><div class="hb"><button class="pill" id="revBtn">★ Client reviews</button><button class="pill" id="cartBtn">Cart <i id="count">0</i></button></div></div></header>
+<div class="strip"><div class="wrap"><span><span class="st">★</span><span id="fb"></span></span><a id="revLink">View reviews →</a></div></div>
+<div class="wrap"><div class="hero"><div class="eb" id="eb"></div><div class="row"><div><h1 id="h1"></h1><p class="sub" id="sub"></p></div><div class="ps"><span>✓ Package selection</span><span>✓ Quick checkout form</span><span>✓ Order summary</span></div></div></div>
+<div id="promo"></div>
+<div class="main" id="shop"><section><div class="hd"><h2>Available packages</h2><span id="cnt"></span></div><div class="chips" id="chips" role="group" aria-label="Filter"></div><div class="grid" id="grid"></div></section>
+<aside id="panel"><div class="ph2"><h2 id="pt"></h2><p id="ps"></p></div><div id="pb"></div></aside></div></div>
+<footer><div class="wrap"><span id="foot"></span><span id="contact"></span></div></footer>
+<div class="mo" id="mo"><div class="mb"><h2>Client reviews</h2><div id="rl"></div><button class="btn" id="mc">Close</button></div></div>
+<div class="fab"><div class="fpop" id="fpop"><p>Ready to order or have a question? We reply fast.</p><button class="btn" id="fOrder">Order now</button><a class="btn alt" id="fabMsg" href="#" target="_blank" rel="noopener">Message us on Messenger</a><a class="s" id="fabPage" href="#" target="_blank" rel="noopener">Visit our Facebook page</a></div><button id="fabBtn">Order / Message</button></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+let DATA={"config": {"brand": "YourBrand", "initials": "YB", "storeTag": "PISOWIFI STORE", "announcement": "YOURBRAND PISOWIFI · SELECT A PACKAGE · ADD TO CART · SEND YOUR ORDER REQUEST", "eyebrow": "PISOWIFI PACKAGES", "headline": "Choose your setup.", "headline2": "Order easily.", "subhead": "Compare our packages, add what you need, and prepare your order in minutes.", "currency": "₱", "messenger": "yourfacebookpage", "email": "sales@yourdomain.com", "phone": "0900 000 0000", "bannerLink": "#shop"}, "products": [{"id": "pk-ew71", "name": "CF-EW71 Package", "cat": "Access point", "icon": "piso", "price": 7899, "badge": "Starter setup", "desc": "COMFAST CF-EW71", "specs": ["CF-EW71 access point", "Up to 20–30 users (advertised)", "2 × 10 m UTP cables", "Metal case included"], "img": ""}, {"id": "pk-e314n", "name": "CF-E314N Package", "cat": "Access point", "icon": "piso", "price": 8599, "badge": "Extended coverage", "desc": "COMFAST CF-E314N", "specs": ["CF-E314N access point", "Up to 20–30 users (advertised)", "2 × 10 m UTP cables", "Metal case included"], "img": ""}, {"id": "pk-router", "name": "Router-Based Package", "cat": "Router-based", "icon": "router", "price": 10899, "badge": "Popular option", "desc": "Ruijie EW1200G PRO", "specs": ["Ruijie EW1200G PRO router", "Up to 50–100 users (advertised)", "2 × 10 m UTP cables", "Metal case included"], "img": ""}, {"id": "pc-office", "name": "Office Desktop i5", "cat": "Computers", "icon": "desktop", "price": 24900, "badge": "", "desc": "Core i5, 16GB RAM", "specs": ["512GB SSD", "Windows 11 Pro", "1-year warranty"], "img": ""}, {"id": "lp-14", "name": "Business Laptop 14\"", "cat": "Computers", "icon": "laptop", "price": 32900, "badge": "", "desc": "Core i5, 16GB RAM", "specs": ["512GB SSD", "Backlit keyboard", "1-year warranty"], "img": ""}], "addons": [{"id": "ad-warranty", "name": "Extended warranty +1 year", "icon": "shield", "price": 1500, "desc": "Parts and labor covered for another year.", "specs": []}, {"id": "ad-setup", "name": "On-site setup and training", "icon": "tools", "price": 2500, "desc": "We install and configure everything for you.", "specs": []}, {"id": "ad-ups", "name": "650VA UPS backup", "icon": "ups", "price": 2900, "desc": "Keeps your unit running during brownouts.", "specs": []}], "reviews": []};
+let CONFIG,PRODUCTS,ADDONS,REVIEWS;
+function applyData(d){CONFIG=d.config||{};PRODUCTS=d.products||[];ADDONS=d.addons||[];REVIEWS=d.reviews||[]}
+applyData(DATA);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const money=n=>(CONFIG.currency||"₱")+Number(n).toLocaleString("en-PH");
+const byId=id=>PRODUCTS.concat(ADDONS).find(p=>p.id===id);
+let cart={},cat="All",view="cart",F={};
+try{cart=JSON.parse(localStorage.getItem("cart")||"{}")}catch(e){}
+const S = 'fill="none" stroke="#1E4FA3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"';
+const ICONS = {
+  desktop:`<svg viewBox="0 0 120 100" ${S}><rect x="14" y="10" width="92" height="58" rx="6"/><path d="M60 68v16M40 88h40"/><circle cx="60" cy="39" r="8" stroke="#38BDF8"/></svg>`,
+  laptop:`<svg viewBox="0 0 120 100" ${S}><rect x="22" y="14" width="76" height="52" rx="5"/><path d="M8 80h104l-8-14H16z"/><path d="M50 74h20" stroke="#38BDF8"/></svg>`,
+  piso:`<svg viewBox="0 0 120 100" ${S}><rect x="26" y="34" width="68" height="54" rx="8"/><rect x="52" y="48" width="16" height="4" rx="2" stroke="#38BDF8"/><circle cx="60" cy="72" r="7" stroke="#38BDF8"/><path d="M42 24a26 26 0 0 1 36 0M50 16a14 14 0 0 1 20 0" stroke="#38BDF8"/></svg>`,
+  router:`<svg viewBox="0 0 120 100" ${S}><rect x="12" y="52" width="96" height="28" rx="6"/><path d="M28 52L20 22M92 52l8-30"/><circle cx="32" cy="66" r="2" stroke="#38BDF8"/><circle cx="44" cy="66" r="2" stroke="#38BDF8"/><path d="M66 66h30"/></svg>`
+};
+ICONS.shield = `<svg viewBox="0 0 120 100" ${S}><path d="M60 12l34 12v26c0 20-14 34-34 40-20-6-34-20-34-40V24z"/><path d="M44 50l12 12 22-24" stroke="#38BDF8"/></svg>`;
+ICONS.tools = `<svg viewBox="0 0 120 100" ${S}><circle cx="60" cy="50" r="14"/><path d="M60 14v14M60 72v14M24 50h14M82 50h14M34 24l10 10M76 66l10 10M86 24L76 34M44 66L34 76" stroke="#38BDF8"/></svg>`;
+ICONS.ups = `<svg viewBox="0 0 120 100" ${S}><rect x="18" y="26" width="84" height="50" rx="8"/><path d="M110 42v18" /><path d="M64 34L50 54h14l-6 16 18-24H62z" stroke="#38BDF8"/></svg>`;
+function srcsFor(p){ return p.img==="none"?[]:p.img ? [p.img] : ["jpg","png","webp"].map(e => `images/${p.id}.${e}`); }
+function smartImg(srcs, alt, fb){ if(!srcs.length) return fb; return `<img src="${srcs[0]}" alt="${alt}" loading="lazy" data-srcs="${srcs.join("|")}" data-fb="${encodeURIComponent(fb)}" onerror="imgFail(this)">`; }
+function imgFail(el){ const l = el.dataset.srcs.split("|"); l.shift(); if(l.length){ el.dataset.srcs = l.join("|"); el.src = l[0]; } else el.outerHTML = decodeURIComponent(el.dataset.fb); }
+
+const thumb=p=>smartImg(srcsFor(p),esc(p.name),ICONS[p.icon]||ICONS.desktop);
+const TINTS=["#EAF1FF","#E6FAF3","#FFEAEE","#FFF4E0"];
+const card=(p,i)=>`<article class="card"><div class="ph" style="background:${TINTS[i%4]}">${p.badge?`<span class="bdg">${esc(p.badge)}</span>`:""}${thumb(p)}</div><div class="cb"><span class="ct">${esc(p.cat)}</span><h3>${esc(p.name)}</h3><p class="mdl">${esc(p.desc)}</p><div class="pr">${money(p.price)}</div><ul>${(p.specs||[]).map(s=>`<li>${esc(s)}</li>`).join("")}</ul><button class="add" data-add="${esc(p.id)}">Add to cart</button></div></article>`;
+function total(){return Object.keys(cart).reduce((t,id)=>t+(byId(id)?.price||0)*cart[id],0)}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2600)}
+function renderShop(){
+  const cats=["All",...new Set(PRODUCTS.map(p=>p.cat))];if(!cats.includes(cat))cat="All";
+  $("#chips").innerHTML=cats.map(c=>`<button class="chip" aria-pressed="${c===cat}" data-cat="${esc(c)}">${c==="All"?"All packages":esc(c)}</button>`).join("");
+  const L=PRODUCTS.filter(p=>cat==="All"||p.cat===cat);$("#cnt").textContent=L.length+" package option"+(L.length==1?"":"s");
+  $("#grid").innerHTML=L.map(card).join("")}
+function renderPanel(){
+  const ids=Object.keys(cart).filter(byId),co=view==="checkout"&&ids.length;
+  $("#count").textContent=ids.reduce((n,i)=>n+cart[i],0);
+  $("#pt").textContent=co?"Checkout details":"Your cart";$("#ps").textContent=co?"Enter your contact and delivery info":"Review your items and add-ons";
+  const lines=ids.map(id=>{const p=byId(id),q=cart[id];return `<div class="it"><div><b>${esc(p.name)}</b><br><small>${money(p.price)} each</small><div class="q"><button data-dec="${esc(id)}" aria-label="Decrease">−</button><span>${q}</span><button data-inc="${esc(id)}" aria-label="Increase">+</button><button class="lnk" data-rm="${esc(id)}">Remove</button></div></div><b>${money(p.price*q)}</b></div>`}).join("");
+  const tot=`<div class="tot"><span>Total</span><span>${money(total())}</span></div>`;let h="";
+  if(!ids.length)h=`<p class="empty">Your cart is empty.<br>Pick a package to get started.</p>`;
+  else if(!co){const rest=ADDONS.filter(a=>!cart[a.id]);
+    h=lines+(rest.length?`<div class="sug"><h3>Add-ons for your order</h3>${rest.map(a=>`<div class="it"><div><b>${esc(a.name)}</b><br><small>${esc(a.desc)}</small></div><div style="text-align:right"><b>${money(a.price)}</b><br><button class="add" data-add="${esc(a.id)}">+ Add</button></div></div>`).join("")}</div>`:"")+tot+`<button class="btn" data-view="checkout">Proceed to checkout</button>`}
+  else{const f=(k,l,ph,t)=>`<label>${l}</label><input data-f="${k}" value="${esc(F[k]||"")}" ${t||""}>`;
+    h=`<button class="lnk" data-view="cart">← Back to cart</button>${f("name","Full name *","","autocomplete=name")}${f("phone","Mobile number *","","inputmode=tel autocomplete=tel")}<div class="g2"><div>${f("city","City / Municipality *")}</div><div>${f("prov","Province *")}</div></div><label>Delivery address *</label><textarea data-f="addr">${esc(F.addr||"")}</textarea><label>Order notes (optional)</label><textarea data-f="notes">${esc(F.notes||"")}</textarea><div style="margin-top:14px">${lines}</div>${tot}<div class="err" id="err" role="alert"></div><button class="btn" id="sendM">Send order on Messenger</button><button class="btn alt" id="sendE">Send by email</button>`}
+  $("#pb").innerHTML=h;try{localStorage.setItem("cart",JSON.stringify(cart))}catch(e){}}
+function orderText(){const l=Object.keys(cart).filter(byId).map(id=>`• ${cart[id]} x ${byId(id).name} – ${money(byId(id).price*cart[id])}`);
+  return `New order request\nName: ${F.name}\nMobile: ${F.phone}\nAddress: ${F.addr}, ${F.city}, ${F.prov}\n${F.notes?"Notes: "+F.notes+"\n":""}\n${l.join("\n")}\n\nTotal: ${money(total())}`}
+function valid(){const ok=F.name&&(F.phone||"").replace(/\D/g,"").length>=10&&F.city&&F.prov&&F.addr;$("#err").textContent=ok?"":"Fill in all required fields, including a valid mobile number.";return ok}
+function renderReviews(){const n=REVIEWS.length,avg=n?(REVIEWS.reduce((a,r)=>a+(+r.rating||5),0)/n).toFixed(1):0;
+  $("#fb").textContent=n?`Client feedback · ${n} review${n>1?"s":""} · ${avg} average`:"Client feedback · no reviews published yet";
+  $("#rl").innerHTML=n?REVIEWS.map(r=>`<div class="rv"><i>${"★".repeat(Math.max(1,Math.min(5,+r.rating||5)))}</i><b>${esc(r.name)}</b><p>${esc(r.text)}</p></div>`).join(""):`<p class="empty">No reviews yet.</p>`}
+function init(){
+  const C=CONFIG;document.title=(C.brand||"Store")+" – "+(C.storeTag||"Store");
+  $("#ann").textContent=C.announcement||"";$("#ann").style.display=C.announcement?"":"none";
+  $("#logo").innerHTML=smartImg(C.logo==="none"?[]:C.logo?[C.logo]:["images/logo.png","images/logo.svg","images/logo.webp"],esc(C.brand),`<span class="bdg0">${esc(C.initials||"")}</span><span><b>${esc(C.brand)}</b><small>${esc(C.storeTag||"")}</small></span>`);
+  $("#eb").textContent=C.eyebrow||"";$("#h1").innerHTML=`${esc(C.headline)} <span>${esc(C.headline2)}</span>`;$("#sub").textContent=C.subhead||"";
+  $("#promo").innerHTML=smartImg(C.banner==="none"?[]:C.banner?[C.banner]:["images/banner.jpg","images/banner.png","images/banner.webp"],"Promo","");
+  $("#foot").textContent="© "+new Date().getFullYear()+" "+(C.brand||"");$("#contact").textContent=[C.phone,C.email].filter(Boolean).join(" · ");
+  $("#fabMsg").href="https://m.me/"+C.messenger;$("#fabPage").href="https://facebook.com/"+C.messenger;
+  cat="All";renderShop();renderPanel();renderReviews()}
+document.addEventListener("click",e=>{const t=e.target.closest("button,a");if(!t)return;const d=t.dataset;
+  if(d.add){cart[d.add]=(cart[d.add]||0)+1;renderPanel();toast(byId(d.add).name+" added to cart")}
+  if(d.inc){cart[d.inc]++;renderPanel()}if(d.dec){if(--cart[d.dec]<=0)delete cart[d.dec];renderPanel()}if(d.rm){delete cart[d.rm];renderPanel()}
+  if(d.cat){cat=d.cat;renderShop()}if(d.view){view=d.view;renderPanel()}
+  if(t.id==="sendM"&&valid()){const x=orderText();(navigator.clipboard?navigator.clipboard.writeText(x):Promise.reject()).then(()=>toast("Order copied. Paste it in Messenger and send."),()=>toast("Open Messenger and type your order."));window.open("https://m.me/"+CONFIG.messenger+"?text="+encodeURIComponent(x),"_blank")}
+  if(t.id==="sendE"&&valid())location.href="mailto:"+CONFIG.email+"?subject="+encodeURIComponent("New order – "+F.name)+"&body="+encodeURIComponent(orderText())});
+document.addEventListener("input",e=>{if(e.target.dataset.f)F[e.target.dataset.f]=e.target.value});
+const go=()=>{view="cart";renderPanel();$("#panel").scrollIntoView({behavior:"smooth",block:"start"})};
+$("#cartBtn").onclick=go;$("#fOrder").onclick=()=>{$("#fpop").classList.remove("on");go()};
+$("#fabBtn").onclick=()=>$("#fpop").classList.toggle("on");
+const rev=on=>$("#mo").classList.toggle("on",on);$("#revBtn").onclick=$("#revLink").onclick=()=>rev(1);$("#mc").onclick=()=>rev(0);$("#mo").onclick=e=>{if(e.target.id==="mo")rev(0)};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")rev(0)});
+window.addEventListener("message",e=>{if(e.data&&e.data.type==="preview"){applyData(e.data.data);init()}});
+fetch("data.json?v="+Date.now()).then(r=>r.json()).then(applyData).catch(()=>{}).then(()=>{init();
+  try{if(!sessionStorage.getItem("popped")){setTimeout(()=>{$("#fpop").classList.add("on");sessionStorage.setItem("popped","1")},8000)}}catch(e){}});
+</script></body></html>

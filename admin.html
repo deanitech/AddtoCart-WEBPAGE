@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Site editor</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:15px system-ui,sans-serif;background:#F1F5FC;color:#0F2040}
+.top{background:#0B2A5B;color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:5}
+.top b{font-size:1.1rem}button{font:inherit;cursor:pointer;border:0;border-radius:8px;padding:9px 14px;font-weight:700;background:#0B2A5B;color:#fff}
+.pri{background:#38BDF8;color:#0B2A5B}.sm{padding:5px 9px;font-size:.8rem;background:#E0EAFB;color:#0B2A5B}.del{background:#FDE2E0;color:#B3261E}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;padding:16px}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid #D8E2F2;border-radius:14px;padding:16px;margin-bottom:14px}
+h2{margin:0 0 10px;font-size:1.05rem}label{display:block;font-size:.8rem;color:#5A6B85;margin:8px 0 3px}
+input,select,textarea{width:100%;padding:8px 10px;border:1.5px solid #D8E2F2;border-radius:8px;font:inherit;background:#fff}textarea{height:64px;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.item{border:1px solid #D8E2F2;border-radius:12px;padding:12px;margin-bottom:12px;background:#F8FAFE}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.row img{width:56px;height:42px;object-fit:cover;border-radius:6px;background:#E0EAFB}
+iframe{width:100%;height:calc(100vh - 100px);border:1px solid #D8E2F2;border-radius:14px;background:#fff;position:sticky;top:70px}
+#msg{padding:10px 20px;font-weight:600}#msg.ok{color:#0a7a3d}#msg.bad{color:#B3261E}
+#conn{max-width:520px;margin:40px auto}small{color:#5A6B85}
+</style></head><body>
+<div class="top"><b>Site editor</b><span><button class="sm" id="out">Disconnect</button> <button class="pri" id="save">Save &amp; publish</button></span></div>
+<div id="msg" role="status"></div>
+
+<div id="conn" class="panel" hidden>
+  <h2>Connect to your GitHub repository</h2>
+  <small>Your site files live in a GitHub repo. Create a <b>fine-grained token</b> (GitHub → Settings → Developer settings) limited to that one repo with <b>Contents: Read and write</b>. It is stored only in this browser.</small>
+  <label>GitHub username or organization</label><input id="gO">
+  <label>Repository name</label><input id="gR">
+  <label>Branch</label><input id="gB" value="main">
+  <label>Token</label><input id="gT" type="password" autocomplete="off">
+  <div class="row"><button class="pri" id="go">Connect</button></div>
+</div>
+
+<div class="layout" id="ed" hidden>
+  <div>
+    <div class="panel"><h2>Site settings</h2>
+      <div class="g2"><div><label>Brand name</label><input data-c="brand"></div><div><label>Logo initials (if no logo)</label><input data-c="initials"></div><div><label>Store tag line</label><input data-c="storeTag"></div><div><label>Top announcement bar</label><input data-c="announcement"></div><div><label>Small heading above title</label><input data-c="eyebrow"></div><div><label>Headline</label><input data-c="headline"></div><div><label>Headline (blue part)</label><input data-c="headline2"></div><div><label>Sub-heading</label><input data-c="subhead"></div><div><label>Currency symbol</label><input data-c="currency"></div><div><label>Messenger / Facebook page name</label><input data-c="messenger"></div><div><label>Email</label><input data-c="email"></div><div><label>Phone</label><input data-c="phone"></div></div>
+      <div class="row"><span>Logo</span><img id="pl"><input type="file" accept="image/*" data-up="logo"><button class="sm del" data-rmc="logo">Remove logo</button></div>
+      <div class="row"><span>Banner / ad</span><img id="pb"><input type="file" accept="image/*" data-up="banner"><button class="sm del" data-rmc="banner">Remove banner</button></div>
+    </div>
+    <div class="panel"><h2>Products</h2><div id="lp"></div><button class="pri" data-add="products">+ Add product</button></div>
+    <div class="panel"><h2>Add-ons</h2><div id="la"></div><button class="pri" data-add="addons">+ Add add-on</button></div>
+    <div class="panel"><h2>Client reviews</h2><div id="lr"></div><button class="pri" data-add="reviews">+ Add review</button></div>
+  </div>
+  <iframe id="pv" src="index.html" title="Live preview"></iframe>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+let D={config:{},products:[],addons:[],reviews:[]}, imgs={}, sha={}, G={};
+const msg=(t,c)=>{const m=$("#msg");m.textContent=t||"";m.className=c||""};
+try{G=JSON.parse(localStorage.getItem("gh")||"{}")}catch(e){}
+const b64=s=>btoa(unescape(encodeURIComponent(s)));
+async function gh(path,method,body){
+  const r=await fetch(`https://api.github.com/repos/${G.o}/${G.r}/contents/${path}`+(method==="GET"||!method?`?ref=${G.b}`:""),
+   {method:method||"GET",headers:{Authorization:"Bearer "+G.t,Accept:"application/vnd.github+json"},body:body?JSON.stringify(Object.assign({branch:G.b},body)):undefined});
+  if(r.status===404)return null; if(!r.ok)throw new Error("GitHub error "+r.status+(r.status===401?" (check your token)":""));
+  return r.json();
+}
+async function load(){
+  msg("Loading…");
+  try{
+    const f=await gh("data.json"); if(!f)throw new Error("data.json not found in the repo. Upload it first.");
+    sha["data.json"]=f.sha; D=JSON.parse(decodeURIComponent(escape(atob(f.content.replace(/\n/g,"")))));
+    D.config=D.config||{};D.products=D.products||[];D.addons=D.addons||[];D.reviews=D.reviews||[];
+    $("#conn").hidden=true;$("#ed").hidden=false;render();msg("");
+  }catch(e){msg(e.message,"bad");$("#conn").hidden=false;$("#ed").hidden=true}
+}
+$("#go").onclick=()=>{G={o:$("#gO").value.trim(),r:$("#gR").value.trim(),b:$("#gB").value.trim()||"main",t:$("#gT").value.trim()};
+  try{localStorage.setItem("gh",JSON.stringify(G))}catch(e){} load()};
+$("#out").onclick=()=>{try{localStorage.removeItem("gh")}catch(e){}location.reload()};
+
+function item(kind,p,i){
+  if(kind==="reviews")return `<div class="item" data-k="reviews" data-i="${i}"><div class="g2"><div><label>Customer name</label><input data-f="name" value="${esc(p.name)}"></div><div><label>Rating (1-5)</label><input data-f="rating" type="number" min="1" max="5" value="${p.rating||5}"></div></div><label>Review</label><textarea data-f="text">${esc(p.text)}</textarea><div class="row"><button class="sm del" data-del="1">🗑 Delete review</button></div></div>`;
+  const ad=kind==="addons", n=D[kind].length;
+  return `<div class="item" data-k="${kind}" data-i="${i}">
+  <div class="g2"><div><label>Name</label><input data-f="name" value="${esc(p.name)}"></div><div><label>Price</label><input data-f="price" type="number" value="${p.price||0}"></div>
+  ${ad?"":`<div><label>Category</label><input data-f="cat" value="${esc(p.cat)}"></div><div><label>Badge (optional)</label><input data-f="badge" value="${esc(p.badge)}"></div>`}
+  <div><label>Icon (no photo)</label><select data-f="icon">${["desktop","laptop","piso","router","shield","tools","ups"].map(x=>`<option ${x===p.icon?"selected":""}>${x}</option>`).join("")}</select></div></div>
+  <label>Description</label><input data-f="desc" value="${esc(p.desc)}">
+  ${ad?"":`<label>Specs (one per line)</label><textarea data-f="specs">${esc((p.specs||[]).join("\n"))}</textarea>`}
+  <div class="row"><img src="${imgs[p.id]||(p.img==="none"?"":p.img)||""}" alt=""><input type="file" accept="image/*" data-up="${p.id}">
+  <button class="sm" data-mv="-1">↑</button><button class="sm" data-mv="1">↓</button><button class="sm" data-rmimg="1">Remove photo</button><button class="sm del" data-del="1">🗑 Delete</button></div></div>`;
+}
+const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+function render(){
+  document.querySelectorAll("[data-c]").forEach(e=>e.value=D.config[e.dataset.c]||"");
+  $("#lp").innerHTML=D.products.map((p,i)=>item("products",p,i)).join("");
+  $("#la").innerHTML=D.addons.map((p,i)=>item("addons",p,i)).join("");
+  $("#lr").innerHTML=D.reviews.map((p,i)=>item("reviews",p,i)).join("");
+  const sv=k=>imgs[k]||(D.config[k]==="none"?"":D.config[k])||"";$("#pl").src=sv("logo");$("#pb").src=sv("banner");preview();
+}
+let T;function preview(){clearTimeout(T);T=setTimeout(()=>{
+  const c=JSON.parse(JSON.stringify(D)),ov=l=>l.forEach(p=>{if(imgs[p.id])p.img=imgs[p.id]});
+  ov(c.products);ov(c.addons);if(imgs.logo)c.config.logo=imgs.logo;if(imgs.banner)c.config.banner=imgs.banner;
+  const w=$("#pv").contentWindow;if(w)w.postMessage({type:"preview",data:c},"*");},250)}
+$("#pv").onload=preview;
+
+document.addEventListener("input",e=>{const t=e.target;
+  if(t.dataset.c){D.config[t.dataset.c]=t.value;preview();return}
+  const it=t.closest(".item");if(!it||!t.dataset.f)return;const p=D[it.dataset.k][it.dataset.i],f=t.dataset.f;
+  p[f]=(f==="price"||f==="rating")?Number(t.value):f==="specs"?t.value.split("\n").map(x=>x.trim()).filter(Boolean):t.value;
+  preview();});
+document.addEventListener("click",e=>{const t=e.target,it=t.closest(".item");
+  if(t.dataset.rmc&&confirm("Remove it from the site?")){delete imgs[t.dataset.rmc];D.config[t.dataset.rmc]="none";render();return}
+  if(t.dataset.add){const k=t.dataset.add;D[k].push(k==="reviews"?{name:"Customer",rating:5,text:""}:{id:(k==="addons"?"ad-":"p-")+Date.now().toString(36),name:"New "+(k==="addons"?"add-on":"product"),cat:"Computers",icon:k==="addons"?"shield":"desktop",price:0,desc:"",specs:[]});render()}
+  if(!it)return;const L=D[it.dataset.k],i=+it.dataset.i;
+  if(t.dataset.rmimg){const p=L[i];delete imgs[p.id];p.img="none";render()}
+  if(t.dataset.del&&confirm("Delete this item?")){L.splice(i,1);render()}
+  if(t.dataset.mv){const j=i+ +t.dataset.mv;if(j>=0&&j<L.length){[L[i],L[j]]=[L[j],L[i]];render()}}});
+document.addEventListener("change",e=>{const t=e.target;
+  if(t.dataset.c==="featuredId"){D.config.featuredId=t.value;preview()}
+  if(t.dataset.up&&t.files[0])shrink(t.files[0],t.dataset.up==="logo").then(u=>{imgs[t.dataset.up]=u;render()})});
+function shrink(file,png){return new Promise(ok=>{const im=new Image();im.onload=()=>{const m=png?600:1000,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");
+  c.width=im.width*k;c.height=im.height*k;const x=c.getContext("2d");if(!png){x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height)}x.drawImage(im,0,0,c.width,c.height);
+  ok(c.toDataURL(png?"image/png":"image/jpeg",.85))};im.src=URL.createObjectURL(file)})}
+
+async function put(path,content64,note){
+  const cur=await gh(path);const r=await gh(path,"PUT",{message:note,content:content64,sha:cur?cur.sha:undefined});return r}
+$("#save").onclick=async()=>{
+  $("#save").disabled=true;
+  try{
+    const v="?v="+Date.now(),d=JSON.parse(JSON.stringify(D)),ids=Object.keys(imgs);let n=0;
+    for(const id of ids){msg(`Uploading image ${++n} of ${ids.length}…`);
+      const isL=id==="logo",isB=id==="banner",path=isL?"images/logo.png":isB?"images/banner.jpg":`images/${id}.jpg`;
+      await put(path,imgs[id].split(",")[1],"Update image "+id);
+      if(isL)d.config.logo=path+v;else if(isB)d.config.banner=path+v;
+      else{const p=d.products.concat(d.addons).find(q=>q.id===id);if(p)p.img=path+v}}
+    msg("Saving content…");
+    await put("data.json",b64(JSON.stringify(d,null,1)),"Update site content");
+    D=d;imgs={};render();
+    msg("Saved. Your live site updates within about a minute.","ok");
+  }catch(e){msg(e.message,"bad")}
+  $("#save").disabled=false};
+
+if(G.t&&G.o&&G.r)load();else{$("#conn").hidden=false;$("#gO").value=G.o||"";$("#gR").value=G.r||""}
+</script></body></html>

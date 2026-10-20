@@ -1,0 +1,124 @@
+{
+ "config": {
+  "brand": "YourBrand",
+  "initials": "YB",
+  "storeTag": "PISOWIFI STORE",
+  "announcement": "YOURBRAND PISOWIFI · SELECT A PACKAGE · ADD TO CART · SEND YOUR ORDER REQUEST",
+  "eyebrow": "PISOWIFI PACKAGES",
+  "headline": "Choose your setup.",
+  "headline2": "Order easily.",
+  "subhead": "Compare our packages, add what you need, and prepare your order in minutes.",
+  "currency": "₱",
+  "messenger": "yourfacebookpage",
+  "email": "sales@yourdomain.com",
+  "phone": "0900 000 0000",
+  "bannerLink": "#shop"
+ },
+ "products": [
+  {
+   "id": "pk-ew71",
+   "name": "CF-EW71 Package",
+   "cat": "Access point",
+   "icon": "piso",
+   "price": 7899,
+   "badge": "Starter setup",
+   "desc": "COMFAST CF-EW71",
+   "specs": [
+    "CF-EW71 access point",
+    "Up to 20–30 users (advertised)",
+    "2 × 10 m UTP cables",
+    "Metal case included"
+   ],
+   "img": ""
+  },
+  {
+   "id": "pk-e314n",
+   "name": "CF-E314N Package",
+   "cat": "Access point",
+   "icon": "piso",
+   "price": 8599,
+   "badge": "Extended coverage",
+   "desc": "COMFAST CF-E314N",
+   "specs": [
+    "CF-E314N access point",
+    "Up to 20–30 users (advertised)",
+    "2 × 10 m UTP cables",
+    "Metal case included"
+   ],
+   "img": ""
+  },
+  {
+   "id": "pk-router",
+   "name": "Router-Based Package",
+   "cat": "Router-based",
+   "icon": "router",
+   "price": 10899,
+   "badge": "Popular option",
+   "desc": "Ruijie EW1200G PRO",
+   "specs": [
+    "Ruijie EW1200G PRO router",
+    "Up to 50–100 users (advertised)",
+    "2 × 10 m UTP cables",
+    "Metal case included"
+   ],
+   "img": ""
+  },
+  {
+   "id": "pc-office",
+   "name": "Office Desktop i5",
+   "cat": "Computers",
+   "icon": "desktop",
+   "price": 24900,
+   "badge": "",
+   "desc": "Core i5, 16GB RAM",
+   "specs": [
+    "512GB SSD",
+    "Windows 11 Pro",
+    "1-year warranty"
+   ],
+   "img": ""
+  },
+  {
+   "id": "lp-14",
+   "name": "Business Laptop 14\"",
+   "cat": "Computers",
+   "icon": "laptop",
+   "price": 32900,
+   "badge": "",
+   "desc": "Core i5, 16GB RAM",
+   "specs": [
+    "512GB SSD",
+    "Backlit keyboard",
+    "1-year warranty"
+   ],
+   "img": ""
+  }
+ ],
+ "addons": [
+  {
+   "id": "ad-warranty",
+   "name": "Extended warranty +1 year",
+   "icon": "shield",
+   "price": 1500,
+   "desc": "Parts and labor covered for another year.",
+   "specs": []
+  },
+  {
+   "id": "ad-setup",
+   "name": "On-site setup and training",
+   "icon": "tools",
+   "price": 2500,
+   "desc": "We install and configure everything for you.",
+   "specs": []
+  },
+  {
+   "id": "ad-ups",
+   "name": "650VA UPS backup",
+   "icon": "ups",
+   "price": 2900,
+   "desc": "Keeps your unit running during brownouts.",
+   "specs": []
+  }
+ ],
+ "reviews": []
+}

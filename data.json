@@ -12,7 +12,9 @@
   "messenger": "yourfacebookpage",
   "email": "sales@yourdomain.com",
   "phone": "0900 000 0000",
-  "bannerLink": "#shop"
+  "bannerLink": "#shop",
+  "logo": "images/logo.png?v=1792516992643",
+  "banner": "images/banner.jpg?v=1792516992643"
  },
  "products": [
   {
@@ -29,7 +31,7 @@
     "2 × 10 m UTP cables",
     "Metal case included"
    ],
-   "img": ""
+   "img": "images/pk-ew71.jpg?v=1792516992643"
   },
   {
    "id": "pk-e314n",

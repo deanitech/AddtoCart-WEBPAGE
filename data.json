@@ -1,6 +1,6 @@
 {
  "config": {
-  "brand": "YourBrand",
+  "brand": "KOKONEK",
   "initials": "YB",
   "storeTag": "PISOWIFI STORE",
   "announcement": "YOURBRAND PISOWIFI · SELECT A PACKAGE · ADD TO CART · SEND YOUR ORDER REQUEST",
@@ -9,12 +9,12 @@
   "headline2": "Order easily.",
   "subhead": "Compare our packages, add what you need, and prepare your order in minutes.",
   "currency": "₱",
-  "messenger": "yourfacebookpage",
+  "messenger": "REVSON PISO BOX",
   "email": "sales@yourdomain.com",
-  "phone": "0900 000 0000",
+  "phone": "09106811695",
   "bannerLink": "#shop",
   "logo": "images/logo.png?v=1792516992643",
-  "banner": "images/banner.jpg?v=1792516992643"
+  "banner": "images/banner.jpg?v=1792518381008"
  },
  "products": [
   {
@@ -31,7 +31,7 @@
     "2 × 10 m UTP cables",
     "Metal case included"
    ],
-   "img": "images/pk-ew71.jpg?v=1792517058719"
+   "img": "images/pk-ew71.jpg?v=1792518381008"
   },
   {
    "id": "pk-e314n",
@@ -47,7 +47,7 @@
     "2 × 10 m UTP cables",
     "Metal case included"
    ],
-   "img": ""
+   "img": "images/pk-e314n.jpg?v=1792518381008"
   },
   {
    "id": "pk-router",
@@ -63,7 +63,7 @@
     "2 × 10 m UTP cables",
     "Metal case included"
    ],
-   "img": ""
+   "img": "images/pk-router.jpg?v=1792518381008"
   },
   {
    "id": "pc-office",
